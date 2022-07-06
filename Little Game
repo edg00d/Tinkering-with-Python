@@ -1,0 +1,117 @@
+import os
+import time
+import random
+def cima (pos1,pos2,direction,atual):
+  if (pos1 != 0):
+    if(mapa[pos1 -1][pos2] not in ordem):
+      if (mapa[pos1 - 1][pos2] == atual):
+        atual = ordem.pop(0)
+      mapa[pos1][pos2] = ""
+      mapa[pos1 - 1][pos2] = "P"
+      pos1 = pos1 - 1
+  os.system('clear')
+  recebe(pos1,pos2,direction,atual)
+def baixo (pos1,pos2,direction,atual):
+  if (pos1 != 9):
+    if (mapa[pos1 + 1][pos2] not in ordem):
+      if (mapa[pos1 + 1][pos2] == atual):
+        atual = ordem.pop(0)
+      mapa[pos1][pos2] = ""
+      mapa[pos1 + 1][pos2] = "P"
+      pos1 = pos1 + 1
+  os.system('clear')
+  recebe(pos1,pos2,direction,atual)
+def direita (pos1,pos2,direction,atual):
+  if (pos2 != 9):
+    if (mapa[pos1][pos2 + 1] not in ordem):
+      if (mapa[pos1][pos2 + 1] == atual):
+        atual = ordem.pop(0)
+      mapa[pos1][pos2] = ""
+      mapa[pos1][pos2 + 1] = "P"
+      pos2 = pos2 + 1
+  os.system('clear')
+  recebe(pos1,pos2,direction,atual)
+def esquerda (pos1,pos2,direction,atual):
+  if (pos2 != 0):
+    if (mapa[pos1][pos2 - 1] not in ordem):
+      if (mapa[pos1][pos2 - 1] == atual):
+        atual = ordem.pop(0)
+      mapa[pos1][pos2] = ""
+      mapa[pos1][pos2 - 1] = "P"
+      pos2 = pos2 - 1
+  os.system('clear')
+  recebe(pos1,pos2,direction,atual)
+def recebe (pos1,pos2,direction,atual):
+  os.system('clear')
+  print("     ---     Seja Bem Vindo     ---")
+  print("       ---      Pac-Fila      ---")
+  print("     --- W : move pra cima      ---")
+  print("     --- S : move pra baixo     ---")
+  print("     --- A : move pra esquerda  ---")
+  print("     --- D : move pra direita   ---")
+  print("     --- n : encerra o programa ---\n")
+  for i in range(10):
+    print(mapa[i])
+  if (atual <= 7):
+    if(atual > 1):
+      print("Você coletou o número ", atual - 1,", continue !\n")
+    print('Colete sempre o número atual.')
+    print("↓ ↓ ↓ ↓ ↓ ↓ ↓")
+    print(" Atual : ",atual)
+    print("↑ ↑ ↑ ↑ ↑ ↑ ↑")
+  else:
+    print("Parabéns, você terminou !! \n:)")
+    return
+  direction = input("\n Informe uma direção.\n W,A,S,D (ou n): ")
+  if(direction == 'n'):
+    print("\nOK, Tchau !")
+  elif (direction == "w"):
+    cima(pos1,pos2,direction,atual)
+  elif (direction == "s"):
+    baixo(pos1,pos2,direction,atual)
+  elif (direction == "d"):
+    direita(pos1,pos2,direction,atual)
+  elif (direction == "a"):
+    esquerda(pos1,pos2,direction,atual)
+  else:
+    recebe(pos1,pos2,direction,atual)
+def inicia():
+  print("Carregando")
+  for i in range(5):
+    print(" .")
+    time.sleep(0.0)
+  os.system("clear")
+  print("\nBem Vindo, esse é o Pac-Fila, um jogo onde ")
+  print(" você deve coletar os números na ordem ") 
+  print(" crescente, partindo do número 1,") 
+  print(" seguindo uma fila até o número 7.")
+  init = input("Vamos começar (Um 'Enter' inicia o jogo) : ")
+  if(init == ""):
+    print("\nÓtimo !\n Vamos começar randomizando a ")
+    print(" posição dos números.\n Aguarde um momento ")
+    for i in range(5):
+      print(" .")
+      time.sleep(0.0)
+    xyvet = ['0,0','0,1','9,1','8,0','9,8','8,9','0,8','1,9']
+    os.system("clear")
+    for i in range(7):
+      x = random.randint(0,7)
+      y = random.randint(0,7)
+      xy = str(x)+","+str(y)
+      while(xy in xyvet):
+        x = random.randint(0,7)
+        y = random.randint(0,7)
+        xy = str(x)+","+str(y)
+      else:
+        xyvet.append(xy)
+        mapa[x][y] = i + 1
+    recebe(pos1,pos2,direction,atual)
+  else:
+    print("\n OK, tchau. ")
+mapa = [''] * 10
+for i in range(len(mapa)):
+  mapa[i] = ['']*10
+pos1 ,pos2 ,direction, atual = 0, 0, '', 1
+mapa[pos1][pos2] = "P"
+ordem = [2,3,4,5,6,7,8]
+inicia()
